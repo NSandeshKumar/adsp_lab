@@ -1,0 +1,26 @@
+%To perform Region of Interest Filtering
+clc; 
+clear all; 
+close all;
+z=imread("lenna.jpg");
+x = rgb2gray(z);
+subplot(331); imshow(x); impixelinfo; title('Original Image');
+roi=roipoly(x,[104 41 46 92],[92 99 168 172]);
+subplot(333);
+imshow(roi);
+title('mask corresponding to Roi');
+a=fspecial('average',[15,15]);
+y=roifilt2(a,x,roi);
+subplot(334);
+imshow(y);
+title('average filter');
+L=fspecial('log');
+y1=roifilt2(L,x,roi);
+subplot(336);
+imshow(y1);
+title('laplacian of gaussian');
+U=fspecial('unsharp');
+Ig2=roifilt2(U,x,roi);
+subplot(337);
+imshow(Ig2);
+title('unsharp masking');

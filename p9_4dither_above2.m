@@ -1,0 +1,25 @@
+% To perform Dithering for grayscale image to more than two grayscales
+clc;
+clear ;
+close all;
+x=imread("Lena.jpg");
+y=im2gray(x);
+y=imresize(y,[512,512]);
+subplot(2,2,1);
+imshow(y);
+title("original image");
+D=[0 56;84 28];
+r=repmat(D,256,256);
+y=double(y);
+q=floor(y/85);
+x3=q+(y-85*q>r);
+subplot(222);
+imshow(uint8(85*x3));
+title("dithering2 4 op gray scales");
+D1=[0 24;12 36];
+r=repmat(D1,256,256);
+q1=floor(y/37);
+x4=q1+(y-37*q1>r);
+subplot(223);
+imshow(uint8(37*x4));
+title("dithering2 8 op gray scales");
